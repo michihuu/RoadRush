@@ -1,1 +1,175 @@
-<div id="score">Press UP</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Road Rush</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #2DC7FF;
+    }
+
+    #score {
+      position: absolute;
+      top: 50%;
+      left: 30%;
+      transform: translate(-50%, -50%);
+      font-size: 48px;
+      font-family: "Press Start 2P", system-ui;
+      font-weight: bold;
+      color: #ffffff;
+      padding: 20px 40px;
+      border-radius: 15px;
+      text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.7), -2px -2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    #titleCard {
+      position: absolute;
+      top: 8%;
+      left: 18%;
+      transform: translate(-50%, -50%);
+      font-size: 48px;
+      font-family: "Press Start 2P", system-ui;
+      font-weight: bold;
+      color: #ffffff;
+      padding: 20px 40px;
+      border-radius: 15px;
+      text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.7), -2px -2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    #info {
+      position: absolute;
+      top: 92%;
+      left: 18%;
+      transform: translate(-50%, -50%);
+      font-size: 22px;
+      font-family: "Press Start 2P", system-ui;
+      font-weight: bold;
+      color: #ffffff;
+      padding: 20px 40px;
+      border-radius: 15px;
+      text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.7), -2px -2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    #modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 40px;
+      border-radius: 10px;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content h1 {
+      font-size: 48px;
+      margin: 0;
+      color: #e74c3c;
+    }
+
+    .modal-content p {
+      font-size: 20px;
+      color: #333;
+    }
+
+    .press-start-2p-regular {
+      font-family: "Press Start 2P", system-ui;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    #level-buttons {
+      position: absolute;
+      top: 90%;
+      right: 10%;
+      display: flex;
+      gap: 15px;
+      z-index: 101;
+    }
+
+    .level-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      font-family: "Press Start 2P", system-ui;
+      cursor: pointer;
+      border: 2px solid #000;
+      border-radius: 5px;
+      color: #000;
+      background-color: #ffffff;
+      transition: background-color 0.3s;
+    }
+
+    .level-button.active {
+      background-color: #999;
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+  <div id="titleCard">Road Rush</div>
+  <div id="score" class="hidden"></div>
+  <div id="info">Press Up to Start</div>
+
+  <div id="modal" class="hidden">
+    <div class="modal-content press-start-2p-regular">
+      <h1>Game Over</h1>
+      <p>Press "R" to restart</p>
+    </div>
+  </div>
+
+  <div id="level-buttons">
+    <button id="levelOneButton" class="level-button press-start-2p-regular" onclick="loadLevel('levelOne')">Level 1</button>
+    <button id="levelTwoButton" class="level-button press-start-2p-regular" onclick="loadLevel('levelTwo')">Level 2</button>
+  </div>
+
+  <script>
+    function loadLevel(level) {
+      window.location.search = `?level=${level}`;
+    }
+  </script>
+
+  <script type="module">
+    const urlParams = new URLSearchParams(window.location.search);
+    const currentLevel = urlParams.get('level') || 'levelOne';
+    const scriptSrc = currentLevel === 'levelOne' ? './levelOne.js' : './levelTwo.js';
+
+    const gameScript = document.createElement('script');
+    gameScript.type = 'module';
+    gameScript.src = scriptSrc;
+    document.body.appendChild(gameScript);
+
+    const levelOneButton = document.getElementById('levelOneButton');
+    const levelTwoButton = document.getElementById('levelTwoButton');
+
+    if (currentLevel === 'levelOne') {
+      levelOneButton.classList.add('active');
+    } else if (currentLevel === 'levelTwo') {
+      levelTwoButton.classList.add('active');
+    }
+  </script>
+</body>
+</html>
