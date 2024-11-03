@@ -356,6 +356,7 @@ function startGame() {
     renderer.setAnimationLoop(animation);
     document.getElementById("score").classList.remove("hidden");
     document.getElementById("info").classList.add("hidden");
+    document.getElementById("info-keys").classList.remove("hidden");
   }
 };
 
@@ -375,6 +376,7 @@ window.addEventListener("keydown", function (event) {
     reset();
     document.getElementById("modal").classList.add("hidden");
     document.getElementById("info").classList.remove("hidden");
+    document.getElementById("info-keys").classList.add("hidden");
     return;
   }
 });
